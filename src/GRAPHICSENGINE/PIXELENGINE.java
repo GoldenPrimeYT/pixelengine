@@ -20,6 +20,7 @@ public class PIXELENGINE extends Canvas implements Runnable {
 	 public final static int WIDTH = 1280;
 	 public final static int HEIGHT = 720;
 	 private static boolean running = false;
+	 private PIXELPOLYGON poly;
 	 public PIXELENGINE() {
 		 this.frame = new JFrame();
 		 Dimension size = new Dimension(WIDTH, HEIGHT);
@@ -46,6 +47,7 @@ public class PIXELENGINE extends Canvas implements Runnable {
 		final double ns = 1000000000.0 / 60;
 		double delta = 0;
 		double frames = 0;
+		init();
 	    while(running) {
 	    	long now= System.nanoTime();
 	    	delta += (now - lastTime) / ns;
@@ -66,6 +68,12 @@ public class PIXELENGINE extends Canvas implements Runnable {
 	    stop();
 		
 	}
+	private void init() {
+		poly = new PIXELPOLYGON(
+				new PIXELPOINT(0,100,0),
+				new PIXELPOINT(100,0,0),
+				new PIXELPOINT(0,0,100));
+	}
 
 	
 	private void render() {
@@ -78,11 +86,6 @@ public class PIXELENGINE extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH * 2, HEIGHT * 2);
-		
-		PIXELPOLYGON poly = new PIXELPOLYGON(
-				new PIXELPOINT(0,100,0),
-				new PIXELPOINT(100,0,0),
-				new PIXELPOINT(0,0,100));
 		poly.render(g);
 		g.dispose();
 		bs.show();
